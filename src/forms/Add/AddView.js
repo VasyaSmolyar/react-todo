@@ -10,7 +10,9 @@ const AddView = ({
   setEmail,
   text,
   setText,
-  onSubmit
+  onSubmit,
+  isEdit,
+  cancelEdit
 }) => (
   <Form>
     <Form.Field>
@@ -49,6 +51,9 @@ const AddView = ({
       }} 
     />
     <Button loading={loading} type='submit' onClick={onSubmit}>Submit</Button>
+    {isEdit &&
+      <Button loading={loading} type='submit' onClick={cancelEdit}>Cancel</Button>
+    }
   </Form>
 );
 

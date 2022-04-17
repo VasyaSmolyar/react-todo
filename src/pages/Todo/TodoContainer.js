@@ -1,6 +1,7 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import useTodoApi from "hooks/services/useTodoApi";
 import TodoView from './TodoView';
+import JWTContext from "context/jwt";
 
 export function TodoContainer() {
   const {
@@ -12,6 +13,12 @@ export function TodoContainer() {
     isPrevious,
     isNext
   } = useTodoApi();
+
+  const [taskEdit, setTaskEdit] = useState(null);
+
+  const { 
+    isAuth
+  } = useContext(JWTContext); 
 
   useEffect(() => {
     getTodos();
@@ -28,6 +35,10 @@ export function TodoContainer() {
       pageIndexes={pageIndexes} 
       setPage={setPage} 
       isPrevious={isPrevious} 
-      isNext={isNext} />
+      isNext={isNext}
+      isAuth={isAuth}
+      taskEdit={taskEdit}
+      setTaskEdit={setTaskEdit} 
+    />
   );
 }

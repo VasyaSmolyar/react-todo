@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Icon, Menu, Table } from 'semantic-ui-react';
+import { Container, Icon, Menu, Table, Button, Checkbox } from 'semantic-ui-react';
 import Add from "forms/Add";
 
 const TodoView = ({
@@ -9,13 +9,24 @@ const TodoView = ({
   page,
   setPage,
   isPrevious,
-  isNext
+  isNext,
+  isAuth,
+  taskEdit,
+  setTaskEdit
 }) => {
   const list = todos.map((task) => (
     <Table.Row key={task.id}>
       <Table.Cell>{task.username}</Table.Cell>
       <Table.Cell>{task.email}</Table.Cell>
       <Table.Cell>{task.text}</Table.Cell>
+      <Table.Cell>
+        <Checkbox value={task.isDone} disabled={!isAuth} />
+      </Table.Cell>
+      {isAuth &&
+        <Table.Cell>
+          <Button onClick={() => setTaskEdit(task)}>Edit</Button>
+        </Table.Cell>
+      }
     </Table.Row>
   ));
 
@@ -32,13 +43,17 @@ const TodoView = ({
 
   return (
     <Container>
-      <Add getTodos={getTodos} />
+      <Add getTodos={getTodos} taskEdit={taskEdit} setTaskEdit={setTaskEdit} />
       <Table celled>
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell>Username</Table.HeaderCell>
             <Table.HeaderCell>Email</Table.HeaderCell>
             <Table.HeaderCell>Text</Table.HeaderCell>
+            <Table.HeaderCell>Is done</Table.HeaderCell>
+            {isAuth &&
+              <Table.HeaderCell>Edit</Table.HeaderCell>
+            }
           </Table.Row>
         </Table.Header>
 

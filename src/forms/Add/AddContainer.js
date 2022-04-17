@@ -1,14 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { postTaskQuery } from 'services/todoServices';
 import AddView from './AddView';
 import { required, email as isEmail} from 'validators';
 
-export const AddContainer = ({ getTodos }) => {
+export const AddContainer = ({ 
+  getTodos,
+  taskEdit,
+  setTaskEdit 
+}) => {
   const [errors, setErrors] = useState({});
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [text, setText] = useState('');
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if(taskEdit !== null) {
+      setUsername(taskEdit.username);
+      setEmail(taskEdit.email);
+      setText(taskEdit.text);
+    } else {
+      setUsername('');
+      setEmail('');
+      setText('');
+    }
+  }, [taskEdit]);
 
   const validate = () => {
     const newErrors = {
@@ -27,15 +43,17 @@ export const AddContainer = ({ getTodos }) => {
     }
 
     setLoading(true);
-    postTaskQuery({
-        username,
-        email,
-        text
-    })
-    .then(() => {
-        getTodos();
-        setLoading(false);
-    });
+    if(taskEdit === null) {
+      postTaskQuery({
+          username,
+          email,
+          text
+      })
+      .then(() => {
+          getTodos();
+          setLoading(false);
+      });
+    }
   }
 
   return (
@@ -49,6 +67,8 @@ export const AddContainer = ({ getTodos }) => {
       text={text}
       setText={setText}
       onSubmit={onSubmit}
+      isEdit={taskEdit !== null}
+      cancelEdit={() => setTaskEdit(null)}
     />
   );
 };
