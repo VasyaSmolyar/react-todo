@@ -1,8 +1,10 @@
 import React from "react";
 import { Container, Icon, Menu, Table } from 'semantic-ui-react';
+import Add from "forms/Add";
 
 const TodoView = ({
   todos,
+  getTodos,
   pageIndexes,
   page,
   setPage,
@@ -30,6 +32,7 @@ const TodoView = ({
 
   return (
     <Container>
+      <Add getTodos={getTodos} />
       <Table celled>
         <Table.Header>
           <Table.Row>

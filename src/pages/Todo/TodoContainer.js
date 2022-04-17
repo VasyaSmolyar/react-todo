@@ -21,6 +21,13 @@ export function TodoContainer() {
   const pageIndexes = [...Array(pagesCount).keys()].map((_, i) => i + 1);
 
   return (
-    <TodoView todos={todos} page={page} pageIndexes={pageIndexes} setPage={setPage} isPrevious={isPrevious} isNext={isNext} />
+    <TodoView 
+      todos={todos}
+      getTodos={getTodos} 
+      page={page} 
+      pageIndexes={pageIndexes} 
+      setPage={setPage} 
+      isPrevious={isPrevious} 
+      isNext={isNext} />
   );
 }
