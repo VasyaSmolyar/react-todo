@@ -5,16 +5,28 @@ import { TODOS, LOGIN } from 'navigation/CONSTANTS';
 
 const MenuView = ({
   item,
-  setItem
+  setItem,
+  isAuth,
+  logout
 }) => {
   return (
     <Menu>
-      <Menu.Item active={item === TODOS}>
+      <Menu.Item active={(item === TODOS) || isAuth}>
         <Link to={TODOS} onClick={() => setItem(TODOS)}>Home</Link>
       </Menu.Item>
-      <Menu.Item active={item === LOGIN}>
-        <Link to={LOGIN} onClick={() => setItem(LOGIN)}>Login</Link>
-      </Menu.Item>
+      { !isAuth && 
+        <Menu.Item active={item === LOGIN}>
+          <Link to={LOGIN} onClick={() => setItem(LOGIN)}>Login</Link>
+        </Menu.Item>
+      }
+      { isAuth &&
+        <Menu.Item>
+          <Link to={TODOS} onClick={() => {
+            setItem(TODOS);
+            logout();
+          }}>Logout</Link>
+        </Menu.Item>
+      }
     </Menu>
   )
 }

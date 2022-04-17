@@ -26,22 +26,16 @@ export const AddContainer = ({ getTodos }) => {
       return;
     }
 
-    try {
-      setLoading(true);
-      postTaskQuery({
+    setLoading(true);
+    postTaskQuery({
         username,
         email,
         text
-      })
-      .then(() => {
+    })
+    .then(() => {
         getTodos();
         setLoading(false);
-      });
-    } catch(err) {
-      //setError(err.message);
-    } finally {
-      setLoading(false);
-    }
+    });
   }
 
   return (

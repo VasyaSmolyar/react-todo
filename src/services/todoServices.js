@@ -1,10 +1,6 @@
 import { SYSTEM_ERROR } from "../config/CONSTANTS";
-import axios from 'axios'
-import { GET_TODOS, POST_TASK ,HOST } from "./CONSTANTS";
-
-const instance = axios.create({
-  baseURL: HOST
-});
+import { GET_TODOS, POST_TASK } from "./CONSTANTS";
+import instance from "./instance";
 
 export const getTodosQuery = (page = 1) => {
   return new Promise((resolve, reject) => {

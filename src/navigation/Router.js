@@ -5,6 +5,7 @@ import {
   Route,
 } from "react-router-dom";
 import Todo from "pages/Todo";
+import Login from "pages/Login";
 import { TODOS, LOGIN } from "navigation/CONSTANTS";
 import Menu from "components/Menu";
 
@@ -14,6 +15,7 @@ const Router = () => {
       <Menu />
       <Routes>
         <Route path={TODOS} element={<Todo />} />
+        <Route path={LOGIN} element={<Login />} />
       </Routes>
     </BrowserRouter>
   );
