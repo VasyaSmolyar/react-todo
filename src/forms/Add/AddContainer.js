@@ -1,16 +1,30 @@
 import React, { useState } from 'react';
 import { postTaskQuery } from 'services/todoServices';
 import AddView from './AddView';
+import { required, email as isEmail} from 'validators';
 
 export const AddContainer = ({ getTodos }) => {
-  const [error, setError] = useState('');
+  const [errors, setErrors] = useState({});
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [text, setText] = useState('');
   const [loading, setLoading] = useState(false);
 
+  const validate = () => {
+    const newErrors = {
+      username: required(username),
+      email: isEmail(email) || required(email),
+      text: required(text)
+    }
+    setErrors(newErrors);
+    return !newErrors.username && !newErrors.email && !newErrors.text;
+  }
+
   const onSubmit = (event) => {
     event.preventDefault();
+    if(!validate()) {
+      return;
+    }
 
     try {
       setLoading(true);
@@ -19,14 +33,12 @@ export const AddContainer = ({ getTodos }) => {
         email,
         text
       })
-      .then((res) => res.json())
       .then(() => {
         getTodos();
         setLoading(false);
-        setError('');
       });
     } catch(err) {
-      setError(err.message);
+      //setError(err.message);
     } finally {
       setLoading(false);
     }
@@ -34,7 +46,7 @@ export const AddContainer = ({ getTodos }) => {
 
   return (
     <AddView
-      error={error}
+      errors={errors}
       loading={loading}
       username={username}
       setUsername={setUsername}

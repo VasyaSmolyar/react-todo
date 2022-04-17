@@ -16,7 +16,6 @@ export default function useTodoApi() {
         setPrevious(!!res.previous);
         setNext(!!res.next);
       })
-
   }, [page]);
 
   return {
