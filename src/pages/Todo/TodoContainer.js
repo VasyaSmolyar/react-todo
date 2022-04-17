@@ -17,7 +17,10 @@ export function TodoContainer() {
     getTodos();
   }, [getTodos]);
 
+  const pagesCount = Math.ceil(count / 3);
+  const pageIndexes = [...Array(pagesCount).keys()].map((_, i) => i + 1);
+
   return (
-    <TodoView todos={todos} page={page} setPage={setPage} isPrevious={isPrevious} isNext={isNext} />
+    <TodoView todos={todos} page={page} pageIndexes={pageIndexes} setPage={setPage} isPrevious={isPrevious} isNext={isNext} />
   );
 }

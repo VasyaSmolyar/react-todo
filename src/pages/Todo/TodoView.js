@@ -3,7 +3,7 @@ import { Container, Icon, Menu, Table } from 'semantic-ui-react';
 
 const TodoView = ({
   todos,
-  getTodos,
+  pageIndexes,
   page,
   setPage,
   isPrevious,
@@ -15,6 +15,17 @@ const TodoView = ({
       <Table.Cell>{task.email}</Table.Cell>
       <Table.Cell>{task.text}</Table.Cell>
     </Table.Row>
+  ));
+
+  const pagination = pageIndexes.map((index) => (
+    <Menu.Item 
+      key={index}
+      active={index === page}
+      onClick={() => setPage(index)} 
+      as='a'
+    >
+      {index}
+    </Menu.Item>
   ));
 
   return (
@@ -37,16 +48,13 @@ const TodoView = ({
             <Table.HeaderCell colSpan='3'>
               <Menu floated='right' pagination>
                 {isPrevious &&
-                  <Menu.Item as='a' icon>
+                  <Menu.Item as='a' icon onClick={() => setPage(page - 1)}>
                     <Icon name='chevron left' />
                   </Menu.Item>
                 }
-                <Menu.Item as='a'>1</Menu.Item>
-                <Menu.Item as='a'>2</Menu.Item>
-                <Menu.Item as='a'>3</Menu.Item>
-                <Menu.Item as='a'>4</Menu.Item>
+                {pagination}
                 {isNext &&
-                  <Menu.Item as='a' icon>
+                  <Menu.Item as='a' icon onClick={() => setPage(page + 1)}>
                     <Icon name='chevron right' />
                   </Menu.Item>
                 }
