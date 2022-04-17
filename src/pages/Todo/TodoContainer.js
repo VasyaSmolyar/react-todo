@@ -18,6 +18,6 @@ export function TodoContainer() {
   }, [getTodos]);
 
   return (
-    <TodoView todos={todos} />
+    <TodoView todos={todos} page={page} setPage={setPage} isPrevious={isPrevious} isNext={isNext} />
   );
 }
